@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if session.get('user_id') %}
+    {% if user.team == 'blue' %}
+    <link rel="stylesheet" href="/static/blue.css">
+    {% elif user.team == 'red' %}
+    <link rel="stylesheet" href="/static/red.css">
+    {% elif user.team == 'yellow' %}
+    <link rel="stylesheet" href="/static/yellow.css">
+    {% else %}
+    <link rel="stylesheet" href="/static/app.css">
+    {% endif %}
+    {% else %}
+    <link rel="stylesheet" href="/static/app.css">
+    {% endif %}
+
+    <link rel="shortcut icon" href="/static/pokeball.png">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div id="content">
+        <form>
+            <nav>
+                <div id="dark_mode">
+                    <input type="checkbox" id="switch" /><label for="switch">dark mode</label>
+                    <!-- <small>dark mode</small> -->
+                </div>
+                <button formmethod="get" formaction="/homepage">home</button>
+                {% if 'user_id' not in session %}
+                <button formmethod="get" formaction="/login">login</button>
+                <button formmethod="get" formaction="/register">register</button>
+                {% endif %}
+                {% if 'user_id' in session %}
+                <button formmethod="get" formaction="/users/{{session.user_id}}">profile</button>
+                <button formaction="/teams/create" formmethod="get">create team</button>
+                <button formmethod="get" formaction="/logout">logout</button>
+                {% endif %}
+            </nav>
+        </form>
+        <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            <section class="messages">
+                {% if messages %}
+                {% for category, message in messages %}
+                <h3 class="{{category}}">{{message}}</h3>
+                <!-- {% if not category == 'info' %}
+                <p class="info">{{message}}</p>
+                {% endif %} -->
+                {% endfor %}
+            </section>
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div id="block">
+            {% block content %}
+            <!-- body content goes here from child template -->
+            {% endblock %}
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+</body>
+
+</html>

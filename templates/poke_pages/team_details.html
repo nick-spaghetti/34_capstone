@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %} {{user.id}} {% endblock %}
+{% block content %}
+<h1 class="title">{{ title }}</h1>
+<table id="team_table">
+    <thead>
+        <th>pokédex sprite</th>
+        <th>pokemon name</th>
+        <th>pokédex id</th>
+        <th>height</th>
+        <th>weight</th>
+    </thead>
+    <tbody>
+        <div class="team">
+            <div class="team_body">
+                {% for pokemon in team.team_pokemon %}
+                <tr>
+                    <td><a href="{{url_for('poke_search', word=pokemon.name)}}"><img class="team-image"
+                                src="{{ pokemon.sprite }}" alt="pokemon image"></a></td>
+                    <td id="poke-title">{{pokemon.name}}</td>
+                    <td>{{pokemon.poke_id}}</td>
+                    <td>{{pokemon.height}}</td>
+                    <td>{{pokemon.weight}}</td>
+                    {% if pokemon %}
+                    <td>
+                        <form>
+                            <button method="post" formaction="/pokemon/{{ pokemon.id }}/delete">&Cross;</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </div>
+        </div>
+    </tbody>
+</table>
+<form>
+    {% if user.username == team.users.username %}
+    <button formaction="/random-poke" formmethod="get">poké safari</button>
+    <button formaction="/teams/{{ team.id }}/delete" formmethod="post">delete team</button>
+    {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+<h1 style="text-align: center;" id="poke-title">{{ title }}!</h1>
+<div class="card card-{{ data['types'][0]['type']['name'] }}">
+    <div class="card-header">
+        <h2 class="card-title">{{ data['name'] }}</h2>
+        <div class="card-subtitle">ID: {{ data['id'] }} | HP: {{ data['stats'][0]['base_stat'] }}</div>
+    </div>
+    <div class="card-body">
+        {% if data['sprites'] %}
+        <div class="image-container">
+            <img class="card-image" src="{{ data['sprites']['front_default'] }}" alt="pokemon image">
+        </div>
+        {% endif %}
+        <div class="type">
+            {% for pokemon_type in data['types'] %}
+            <div class="type-{{ pokemon_type['type']['name'] }}">{{ pokemon_type['type']['name'] }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="moves">
+            <div class="move-container">
+                <div class="move-name">
+                    {{ data['moves'][-1]['move']['name'] }}
+                </div>
+                <div class="move-damage">
+                    {{ data['stats'][1]['base_stat'] }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form>
+    <button formaction="teams/assemble/{{ data['id'] }}" formmethod="get">Add to team</button>
+    <button formaction="/random-poke" formmethod="get">poké safari</button>
+</form>
+{% endblock %}

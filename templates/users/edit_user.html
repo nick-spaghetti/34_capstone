@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %} edit {{user.id}} {% endblock %}
+{% block content %}
+<h1 class="title">{{title}}</h1>
+<h2>update user information</h2>
+<form>
+    {{ form.hidden_tag() }}
+    {% for field in form
+  if field.widget.input_type != 'hidden' %}
+    <div>
+        <div>
+            {{ field.label }}
+        </div>
+        <div>
+            {{ field(class='form-field') }}
+            {% for error in field.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    <button formmethod="post">update user info</button>
+    <!-- <button formmethod="get" formaction="/">cancel</button> -->
+    <button formmethod="get" formaction="/users/{{user.id}}">cancel</button>
+</form>
+{% endblock %}

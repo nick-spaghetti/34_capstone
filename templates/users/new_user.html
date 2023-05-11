@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %} Users {% endblock %}
+{% block content %}
+<h2>add a new user</h2>
+<form method="post">
+    <input type="text" name="first_name" placeholder="first_name">
+    <input type="text" name="last_name" placeholder="last_name">
+    <input type="text" class="form-control" id="image_url" name="image_url" placeholder="Provide an image of this user">
+    <button type="submit">submit user</button>
+    <button formaction="/homepage" formmethod="get">home</button>
+</form>
+{% endblock %}

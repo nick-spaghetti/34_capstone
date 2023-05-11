@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+<div class="chart">
+    <div class="chart_body">
+        <h2>{{title}}</h2>
+        <form action="/word-search">
+            <input type="text" name="word" placeholder="type a word" style="margin-left: -15px;">
+            <button>Go!</button>
+        </form>
+        <a href="/random-poke" id="/random-poke">random pokemon</a>
+    </div>
+</div>
+<table id="team_table">
+    <thead>
+        <h2>new teams!</h2>
+        <th>team name</th>
+        <th>player</th>
+    </thead>
+    <tbody>
+        <div class="team">
+            <div class="team_body">
+                {% for team in teams %}
+                <tr>
+                    <td>
+                        <a href="/teams/{{team.id}}">
+                            {{team.name}}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/users/{{team.owner.id}}">
+                            {{team.users.username}}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </div>
+        </div>
+    </tbody>
+</table>
+{% endblock %}

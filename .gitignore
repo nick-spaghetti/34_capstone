@@ -1,0 +1,6 @@
+venv/
+_notes/
+ref/
+Procfile
+__pycache__/
+runtime.txt

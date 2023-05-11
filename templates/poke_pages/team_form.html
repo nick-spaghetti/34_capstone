@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+<h1 class="title">{{title}}</h1>
+<h2>team form</h2>
+<form>
+    {{ form.hidden_tag() }}
+    {% for field in form
+  if field.widget.input_type != 'hidden' %}
+    <div>
+        <div>
+            {{ field.label }}
+        </div>
+        <div>
+            {{ field(class='') }}
+            {% for error in field.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    <button formmethod="post">submit</button>
+    <button formmethod="get" formaction="/users/{{user.id}}">cancel</button>
+</form>
+{% endblock %}

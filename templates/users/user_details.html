@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %} {{user.id}} {% endblock %}
+{% block content %}
+<!--  -->
+<h1 class="title">{{user.greet()}}</h1>
+<!-- <blockquote>
+    <p>{{user.greet()}}</p>
+</blockquote> -->
+<p>id: {{user.id}}</p>
+<p>
+    name: {{user.first_name}} {{user.last_name}}
+</p>
+<p>
+    {{ user.username }}
+    {{ user.birth_data }}
+</p>
+{% if session['user_id'] == user.id %}
+<form>
+    <button formaction="/users/{{ user.id }}/edit" formmethod="get">edit user</button>
+    <button formaction="/users/{{ user.id }}/delete" formmethod="post">delete user</button>
+</form>
+{% endif %}
+<table id="team_table">
+    <thead>
+        <th>team name</th>
+        <th>team count</th>
+    </thead>
+    <tbody>
+        <div class="team">
+            <div class="team_body">
+                {% for team in user.user_teams %}
+                <tr>
+                    <td>
+                        <a href="/teams/{{team.id}}">{{team.name}}</a>
+                    </td>
+                    <td>{{team.team_pokemon|length}}</td>
+                </tr>
+                {% endfor %}
+            </div>
+        </div>
+    </tbody>
+</table>
+{% endblock %}
